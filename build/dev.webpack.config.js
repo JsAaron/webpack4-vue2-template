@@ -1,21 +1,19 @@
 const path = require('path');
 const webpack = require("webpack")
+const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+const baseWebpackConfig = require('./base.webpack.config')
 const config = require('../config')
 
-module.exports = {
+//热更新,填充每个路径名
+Object.keys(baseWebpackConfig.entry).forEach(function (name) {
+  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
+})
+
+module.exports = merge(baseWebpackConfig, {
   mode: 'development',
-  entry: ['webpack-hot-middleware/client?noInfo=true&reload=true', './src/index.js'],
-  // entry: {
-  //   app: './src/index.js'
-  // },
   devtool: 'inline-source-map',
-  devServer: {
-    contentBase: './dist',
-    hot: true
-  },
   output: {
     filename: '[name].bundle.js',
     path: config.dist,
@@ -48,4 +46,5 @@ module.exports = {
     // 实现刷新浏览器必写
     new webpack.HotModuleReplacementPlugin()
   ]
-};
+})
+

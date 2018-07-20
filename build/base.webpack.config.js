@@ -1,9 +1,7 @@
-'use strict'
-const path = require('path')
-const utils = require('./utils')
-
-
+var path = require('path')
 
 module.exports = {
-
+  entry: {
+    app: './src/index.js'
+  }
 }
