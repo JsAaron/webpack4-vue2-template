@@ -2,7 +2,7 @@ import _ from 'lodash';
 import './style.css';
 import Icon from './icon.png';
 import printMe from './print.js';
-
+console.log(121)
 function component() {
   var element = document.createElement('div');
   var btn = document.createElement('button');
