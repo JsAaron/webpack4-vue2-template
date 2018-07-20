@@ -1,12 +1,13 @@
 
-var path = require('path')
+const path = require('path')
+const utils = require('./utils')
 
 /**
  * 公共配置
  */
 module.exports = {
-  mode: 'development',
   publicPath: '/',
   port: 8000,
-  dist: path.resolve(__dirname, 'dist')
+  rootPath:utils.rootPath,
+  dist: path.resolve(utils.rootPath, 'dist')
 }

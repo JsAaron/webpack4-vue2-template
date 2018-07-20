@@ -1,14 +1,11 @@
 'use strict'
 
 const path = require('path')
+const rootPath = process.cwd()
 
 module.exports = {
+  rootPath,
   resolve: function (dir) {
     return path.join(__dirname, '..', dir)
-  },
-
-  assetsPath: function (_path) {
-    const assetsSubDirectory = 'static'
-    return path.posix.join(assetsSubDirectory, _path)
   }
 }
