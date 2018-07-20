@@ -6,8 +6,8 @@
   "private": true,
   "license": "GPL",
   "scripts": {
-    "dev": "node build/dev.server.js",
-    "build": "webpack --config build/prod.webpack.config.js",
+    "dev": "cross-env NODE_ENV=development  node build/dev.server.js",
+    "build": "cross-env NODE_ENV=production webpack --config build/prod.webpack.config.js",
     "start": "webpack-dev-server --open",
     "server": "node server.js"
   },

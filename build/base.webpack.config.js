@@ -7,6 +7,9 @@ const utils = require('../config/utils')
 
 module.exports = {
   entry: {
+    //公共代码
+    commons: ["./src/jquery"],
+    //逻辑代码
     app: './src/index.js',
     another: './src/another-module.js'
   },
@@ -24,13 +27,15 @@ module.exports = {
     }),
     //动态生成index.html
     new HtmlWebpackPlugin({
-      title: '测试',
       //源文件地址
       template: utils.resolve('template/index.html'),
       //目标位置
+      // 输出文件【注意：这里的根路径是module.exports.output.path】
       filename: utils.resolve('dist/index.html'),
       //脚本注入底部
-      inject: true
+      inject: true,
+      //每次编译产生的唯一hash值
+      hash:true
     })
   ]
 }

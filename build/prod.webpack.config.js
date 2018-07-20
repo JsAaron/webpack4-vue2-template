@@ -9,9 +9,25 @@ const config = require('../config/index')
 module.exports = merge(baseWebpackConfig, {
   mode: 'production',
   devtool: 'source-map',
+  //替换CommonsChunkPlugin
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          name: "commons",
+          chunks: "initial",
+          minChunks: 2
+        }
+      }
+    }
+  },
   plugins: [
     new UglifyJSPlugin({
       sourceMap: true
+      // //看警告信息
+      // compress: {
+      //   warnings: true
+      // }
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')

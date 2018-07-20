@@ -1,7 +1,7 @@
 import _ from 'lodash';
 // import './style.css';
 // import Icon from './icon.png';
-// import printMe from './print.js';
+import printMe from './jquery';
 // console.log(121)
 function component() {
   var element = document.createElement('div');
@@ -10,6 +10,8 @@ function component() {
   element.innerHTML = _.join(['Hello', 'webpack'], ' ');
   element.classList.add('hello');
 
+
+  printMe()
   // btn.innerHTML = 'Click me and check the console!';
   // btn.onclick = printMe;
   // element.appendChild(btn);
@@ -18,7 +20,7 @@ function component() {
   // var myIcon = new Image();
   // myIcon.src = Icon;
 
-  element.appendChild(myIcon);
+  // element.appendChild(myIcon);
 
   return element;
 }
