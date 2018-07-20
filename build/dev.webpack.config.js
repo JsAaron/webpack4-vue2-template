@@ -12,23 +12,6 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 module.exports = merge(baseWebpackConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
-      },
-      {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          'file-loader'
-        ]
-      }
-    ]
-  },
   plugins: [
     // 实现刷新浏览器必写
     new webpack.HotModuleReplacementPlugin()

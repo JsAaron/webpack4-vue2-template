@@ -3,22 +3,56 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const config = require('../config/index')
 const utils = require('../config/utils')
-
+const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
   entry: {
     //公共代码
-    commons: ["./src/jquery"],
+    commons: ["./src/jquery", "vue"],
     //逻辑代码
-    app: './src/index.js',
-    another: './src/another-module.js'
+    app: './src/index.js'
   },
   output: {
     filename: '[name].bundle.js',
     path: config.dist,
     publicPath: config.publicPath
   },
+  resolve: {
+    extensions: ['.js', '.vue', '.less', '.css', '.scss']
+  },
+  module: {
+    rules: [{
+      test: /\.vue$/,
+      use: 'vue-loader'
+    },
+    {
+      test: /\.js$/,
+      exclude: /(node_modules|bower_components)/,
+      use: ['babel-loader']
+    }, {
+      test: /\.scss$/,
+      use: [
+        "style-loader", // creates style nodes from JS strings
+        "css-loader", // translates CSS into CommonJS
+        "sass-loader" // compiles Sass to CSS
+      ]
+    },
+    {
+      test: /\.css$/,
+      use: [
+        'style-loader',
+        'css-loader'
+      ]
+    },
+    {
+      test: /\.(png|svg|jpg|gif)$/,
+      use: [
+        'file-loader'
+      ]
+    }]
+  },
   plugins: [
+    new VueLoaderPlugin(),
     //清理文件夹
     new CleanWebpackPlugin(['dist'], {
       root: config.rootPath, //给出根目录，dist的相对点
@@ -35,7 +69,7 @@ module.exports = {
       //脚本注入底部
       inject: true,
       //每次编译产生的唯一hash值
-      hash:true
+      hash: true
     })
   ]
 }

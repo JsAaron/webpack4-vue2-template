@@ -7,7 +7,8 @@ const baseWebpackConfig = require('./base.webpack.config')
 const config = require('../config/index')
 
 module.exports = merge(baseWebpackConfig, {
-  mode: 'production',
+  mode:'development',
+  // mode: 'production',
   devtool: 'source-map',
   //替换CommonsChunkPlugin
   optimization: {
@@ -22,13 +23,9 @@ module.exports = merge(baseWebpackConfig, {
     }
   },
   plugins: [
-    new UglifyJSPlugin({
-      sourceMap: true
-      // //看警告信息
-      // compress: {
-      //   warnings: true
-      // }
-    }),
+    // new UglifyJSPlugin({
+    //   sourceMap: true
+    // }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     })
