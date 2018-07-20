@@ -1,34 +1,25 @@
-'use strict'
-
-const webpack = require('webpack')
-const merge = require('webpack-merge')
 const path = require('path');
-const baseConfig = require('./base.webpack.config')
+const webpack = require("webpack")
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const HOST = 'localhost'
-const PORT = 6789
+const config = require('../config')
 
-module.exports = merge(baseConfig, {
-  entry: './src/index.js',
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
-  },
+module.exports = {
   mode: 'development',
+  entry: ['webpack-hot-middleware/client?noInfo=true&reload=true', './src/index.js'],
+  // entry: {
+  //   app: './src/index.js'
+  // },
+  devtool: 'inline-source-map',
   devServer: {
-    clientLogLevel: 'warning',
-    hot: true,
-    contentBase: 'dist',
-    compress: true,
-    host: HOST,
-    port: PORT,
-    // open: true,
-    overlay: { warnings: false, errors: true },
-    publicPath: '/',
-    quiet: true,
-    watchOptions: {
-      poll: true
-    }
+    contentBase: './dist',
+    hot: true
+  },
+  output: {
+    filename: '[name].bundle.js',
+    path: config.dist,
+    publicPath: config.publicPath
   },
   module: {
     rules: [
@@ -38,7 +29,23 @@ module.exports = merge(baseConfig, {
           'style-loader',
           'css-loader'
         ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader'
+        ]
       }
     ]
-  }
-})
+  },
+  plugins: [
+    //清理文件夹
+    new CleanWebpackPlugin(['dist']),
+    //动态生成index.html
+    new HtmlWebpackPlugin({
+      title: 'Output Management'
+    }),
+    // 实现刷新浏览器必写
+    new webpack.HotModuleReplacementPlugin()
+  ]
+};

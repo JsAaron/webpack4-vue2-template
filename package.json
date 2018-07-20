@@ -6,7 +6,7 @@
   "private": true,
   "license": "GPL",
   "scripts": {
-    "dev": "webpack-dev-server --progress --config build/dev.webpack.config.js",
+    "dev": "node build/dev.server.js",
     "build": "webpack",
     "start": "webpack-dev-server --open",
     "server": "node server.js"
