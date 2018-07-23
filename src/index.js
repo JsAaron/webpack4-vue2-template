@@ -1,10 +1,29 @@
 import Vue from 'vue'
-import App from './App'
+import VueRouter from 'vue-router'
+import routes from './router/index'
+import store from './store/'
+import { routerMode } from './config/env'
 
+//300毫秒延时
+import FastClick from 'fastclick'
+if ('addEventListener' in document) {
+  document.addEventListener('DOMContentLoaded', function () {
+    FastClick.attach(document.body);
+  }, false);
+}
 
-// console.log(process.env.NODE_ENV)
+Vue.use(VueRouter)
+const router = new VueRouter({
+  routes,
+  mode: routerMode,
+  strict: process.env.NODE_ENV !== 'production',
+  scrollBehavior(to, from, savedPosition) {
+
+  }
+})
 
 new Vue({
-  el: '#app',
-  render: h => h(App)
-})
+  router,
+  store
+}).$mount('#app')
+

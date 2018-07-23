@@ -7,18 +7,24 @@
   "license": "GPL",
   "scripts": {
     "dev": "cross-env NODE_ENV=development  node build/dev.server.js",
-    "build": "cross-env NODE_ENV=production webpack --config build/prod.webpack.config.js",
+    "build": "cross-env NODE_ENV=production node build/prod.build.js",
     "start": "webpack-dev-server --open",
     "server": "node server.js"
   },
   "dependencies": {
+    "fastclick": "^1.0.6",
     "lodash": "^4.17.10",
-    "vue": "^2.5.16"
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-plugin-transform-vue-jsx": "^3.7.0",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
@@ -28,6 +34,7 @@
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.9.2",
     "opn": "^5.3.0",
+    "ora": "^3.0.0",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.7",

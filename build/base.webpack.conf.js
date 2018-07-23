@@ -4,19 +4,21 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const config = require('../config/index')
 const utils = require('../config/utils')
 const { VueLoaderPlugin } = require('vue-loader')
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
+// const vueLoaderConfig = require('./vue-loader.conf')
 
 module.exports = {
   entry: {
     // 需要被提取为公共模块的群组
-    commons: ["./src/jquery", "vue"],
+    commons: ["vue"],
     //逻辑代码
     app: './src/index.js'
   },
   output: {
-    //基于文件的md5生成Hash名称的script来防止缓存
-    filename: '[name].bundle.js',
     //输出文件，路径相对于本文件所在的位置
-    path: config.dist,
+    path: config.build.assetsRoot,
+    //基于文件的md5生成Hash名称的script来防止缓存
+    filename: '[name].js',
     // 设置publicPath这个属性会出现很多问题：
     // 1.可以看成输出文件的另一种路径，差别路径是相对于生成的html文件；
     // 2.也可以看成网站运行时的访问路径；
@@ -24,17 +26,19 @@ module.exports = {
     //   如果没有确定的发布地址不建议配置该属性，特别是在打包图片时，路径很容易出现混乱，
     //   如果没有设置，则默认从站点根目录加载
     // publicPath: '../static/js/',
-    publicPath: config.publicPath
+    publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.less', '.css', '.scss'],
     // 模块别名地址，方便后续直接引用别名，无须写长长的地址，注意如果后续不能识别该别名，需要先设置root
-    alias:{}
+    alias: {
+      '@': utils.resolve('src'),
+    }
   },
   module: {
     rules: [{
       test: /\.vue$/,
-      use: 'vue-loader'
+      loader: 'vue-loader'
     },
     {
       test: /\.js$/,
@@ -63,7 +67,9 @@ module.exports = {
     }]
   },
   plugins: [
-    new VueLoaderPlugin(),
+    //抽离css
+    // new ExtractTextPlugin("style.css"),
+    // new VueLoaderPlugin(),
     //清理文件夹
     new CleanWebpackPlugin(['dist'], {
       root: config.rootPath, //给出根目录，dist的相对点
