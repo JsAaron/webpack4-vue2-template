@@ -1,11 +1,11 @@
 const path = require('path')
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const config = require('../config/index')
-const utils = require('../config/utils')
-const { VueLoaderPlugin } = require('vue-loader')
+const config = require('../config')
+const utils = require('./utils')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
-// const vueLoaderConfig = require('./vue-loader.conf')
+const vueLoaderConfig = require('./vue.loader.conf')
 
 module.exports = {
   entry: {
@@ -38,25 +38,33 @@ module.exports = {
   module: {
     rules: [{
       test: /\.vue$/,
-      loader: 'vue-loader'
+      loader: 'vue-loader',
+      options: vueLoaderConfig
     },
     {
       test: /\.js$/,
       exclude: /(node_modules|bower_components)/,
       use: ['babel-loader']
     }, {
+      /**1：import 'style.scss'
+       * 2：
+       * <style lang="scss">
+           write SCSS here 
+         </style>
+       */
       test: /\.scss$/,
       use: [
-        "style-loader", // creates style nodes from JS strings
-        "css-loader", // translates CSS into CommonJS
-        "sass-loader" // compiles Sass to CSS
+        'vue-style-loader',
+        'css-loader',
+        'sass-loader'
       ]
     },
     {
       test: /\.css$/,
       use: [
-        'style-loader',
-        'css-loader'
+        'vue-style-loader',
+        'css-loader',
+        'style-loader'
       ]
     },
     {
@@ -69,7 +77,8 @@ module.exports = {
   plugins: [
     //抽离css
     // new ExtractTextPlugin("style.css"),
-    // new VueLoaderPlugin(),
+    //Vue Loader必须配置的插件
+    new VueLoaderPlugin(),
     //清理文件夹
     new CleanWebpackPlugin(['dist'], {
       root: config.rootPath, //给出根目录，dist的相对点

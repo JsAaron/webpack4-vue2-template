@@ -6,4 +6,7 @@ Babel 默认只转换新的 JavaScript 语法，而不转换新的 API。
 babel-runtime 是供编译模块复用工具函数。是锦上添花
 babel-polyfil是雪中送炭，是转译没有的api.
 
+vue-loader
+https://vue-loader.vuejs.org/guide/#manual-configuration
+https://vue-loader.vuejs.org/options.html#transformasseturls
 
